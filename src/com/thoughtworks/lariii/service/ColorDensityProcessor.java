@@ -15,7 +15,6 @@ public class ColorDensityProcessor {
 		int baseY = topLeft.y();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				System.out.println(desiredRGB + "  got : " + imgSource.getPixel(i + baseX, j + baseY));
 				if (desiredRGB == imgSource.getPixel(i + baseX, j + baseY)) {
 					count++;
 				}

@@ -82,7 +82,6 @@ public class SquareDetector {
 						CV_CHAIN_APPROX_SIMPLE);
 
 				CvSeq approx;
-
 				while (contours != null && !contours.isNull()) {
 					if (contours.elem_size() > 0) {
 						approx = cvApproxPoly(contours, Loader.sizeof(CvContour.class), storage,

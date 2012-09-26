@@ -7,7 +7,7 @@ import com.thoughtworks.lariii.model.ImageSource;
 import com.thoughtworks.lariii.model.Point;
 
 public class NumberDetector {
-	private static final int BLACK_RGBA = 0;
+	private static final int BLACK_RGBA = 0xff000000;
 	private int basicSegmentWidth;
 	private int basicSegmentLength;
 	private double threshold;
@@ -37,9 +37,9 @@ public class NumberDetector {
 		bitmapNumberMap.put(0x30, 1);
 		bitmapNumberMap.put(0x5B, 2);
 		bitmapNumberMap.put(0x4F, 3);
-		bitmapNumberMap.put(0x65, 4);
+		bitmapNumberMap.put(0x66, 4);
 		bitmapNumberMap.put(0x6D, 5);
-		bitmapNumberMap.put(0x7C, 6);
+		bitmapNumberMap.put(0x7D, 6);
 		bitmapNumberMap.put(0x07, 7);
 		bitmapNumberMap.put(0x7F, 8);
 		bitmapNumberMap.put(0x6F, 9);
@@ -50,7 +50,7 @@ public class NumberDetector {
 		int l = basicSegmentLength;
 		int w = basicSegmentWidth;
 		segmentRanges[0] = new Point[]{new Point(0, 0), new Point(l, w)};
-		segmentBitmapMap.put(segmentRanges[0], 0x00);
+		segmentBitmapMap.put(segmentRanges[0], 0x01);
 
 		segmentRanges[1] = new Point[]{new Point(l, w), new Point(l + w, l + w)};
 		segmentBitmapMap.put(segmentRanges[1], 0x02);
@@ -58,7 +58,7 @@ public class NumberDetector {
 		segmentRanges[2] = new Point[]{new Point(l, l + 2 * w), new Point(l + w, 2 * (l + w))};
 		segmentBitmapMap.put(segmentRanges[2], 0x04);
 
-		segmentRanges[3] = new Point[]{new Point(0, 2 * (l + w)), new Point(l, 2 * l + 3 * w)};
+		segmentRanges[3] = new Point[]{new Point(0, 34), new Point(15, 36)};
 		segmentBitmapMap.put(segmentRanges[3], 0x08);
 
 		segmentRanges[4] = new Point[]{new Point(-w, l + 2 * w), new Point(0, 2 * (l + w))};
@@ -84,11 +84,9 @@ public class NumberDetector {
 
 			colorDensity = colorDensityProcessor.getColorDensity(imgSource, topLeft, bottomRight,
 					BLACK_RGBA);
-
 			if (colorDensity >= threshold) {
 				bitmap |= segmentBitmapMap.get(range);
 			}
-
 		}
 		if (bitmapNumberMap.containsKey(bitmap))
 			return bitmapNumberMap.get(new Integer(bitmap));

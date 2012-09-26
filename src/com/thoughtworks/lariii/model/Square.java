@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.googlecode.javacv.cpp.opencv_core.CvSeq;
 
-public class Square {
+public class Square implements Comparable<Square> {
 	private List<Point> points;
 	private CvSeq imageData;
 
@@ -38,6 +38,22 @@ public class Square {
 	}
 
 	@Override
+	public int compareTo(Square anotherSquare) {
+		int y_diff = getTopLeft().y() - anotherSquare.getTopLeft().y();
+
+		if (y_diff < 0)
+			return -1;
+		else if (y_diff > 0)
+			return 1;
+
+		if (getTopLeft().x() < anotherSquare.getTopLeft().x())
+			return -1;
+		else if (getTopLeft().x() > anotherSquare.getTopLeft().x())
+			return 1;
+		return 0;
+	}
+
+	@Override
 	public String toString() {
 		return points.toString();
 	}
@@ -46,8 +62,7 @@ public class Square {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((imageData == null) ? 0 : imageData.hashCode());
+		result = prime * result + ((imageData == null) ? 0 : imageData.hashCode());
 		result = prime * result + ((points == null) ? 0 : points.hashCode());
 		return result;
 	}
